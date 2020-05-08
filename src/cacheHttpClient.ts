@@ -297,6 +297,12 @@ async function uploadFile(
                         autoClose: false
                     });
 
+                    chunk.on("error", error => {
+                        throw new Error(
+                            `Cache upload failed because file read failed with ${error.Message}`
+                        );
+                    });
+
                     await uploadChunk(
                         httpClient,
                         resourceUrl,
